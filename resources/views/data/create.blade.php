@@ -57,89 +57,9 @@
                           </span>
                           @enderror
                         </div>
-                        <div class="form-group">
-                          <label for="kampus">Kampus</label>
-                          <select class="custom-select @error('kampus') is-invalid @enderror" id="kampus"  name="kampus" required>
-                            <option >- Select Kampus -</option>
-                            @if (old('kampus') == 'Kampus 1')
-                                
-                            <option value="Kampus 1" selected>Kampus 1</option>
-                            @elseif (old('kampus') == 'Kampus 2')
-                            <option value="Kampus 2" selected>Kampus 2</option>
-                            @elseif (old('kampus') == 'Kampus 3')
-                            <option value="Kampus 3" selected>Kampus 3</option>
-                            @elseif (old('kampus') == 'Kampus 3')
-                            <option value="Kampus 4" selected>Kampus 4</option>
-                            @endif
-                            <option value="Kampus 1">Kampus 1</option>
-                            <option value="Kampus 2">Kampus 2</option>
-                            <option value="Kampus 3">Kampus 3</option>
-                            <option value="Kampus 4">Kampus 4</option>
-                          </select>
-                          @error('kampus')
-                          <span class="invalid-feedback">
-                              {{ $message }}
-                          </span>
-                          @enderror
-                        </div>
+                        
                     </div>
                       <div class="col-lg-6">
-                      
-                        <div class="form-group">
-                          <label for="gedung">Gedung</label>
-                          <select class="custom-select  @error('gedung') is-invalid @enderror" id="gedung" name="gedung">
-                            <option >- Select Gedung -</option>
-                            <option disabled>----------------- Kampus 1 -----------------</option>
-                            @foreach ($gedungKampus1 as $data )
-                            @if (old('gedung') == $data->gedung)
-                            <option value="{{ $data->gedung }}" selected>{{ $data->gedung }}</option>
-                            @else
-                            <option value="{{ $data->gedung }}">{{ $data->gedung }}</option>
-                            @endif
-                            @endforeach
-                            <option disabled>----------------- Kampus 2 -----------------</option>
-                            @foreach ($gedungKampus2 as $data )
-                            @if (old('gedung') == $data->gedung)
-                            <option value="{{ $data->gedung }}" selected>{{ $data->gedung }}</option>
-                            @else
-                            <option value="{{ $data->gedung }}">{{ $data->gedung }}</option>
-                            @endif
-                            @endforeach
-                            <option disabled>----------------- Kampus 3 -----------------</option>
-                            @foreach ($gedungKampus3 as $data )
-                            @if (old('gedung') == $data->gedung)
-                            <option value="{{ $data->gedung }}" selected>{{ $data->gedung }}</option>
-                            @else
-                            <option value="{{ $data->gedung }}">{{ $data->gedung }}</option>
-                            @endif
-                            @endforeach
-                            <option disabled>----------------- Kampus 4 -----------------</option>
-                            @foreach ($gedungKampus4 as $data )
-                              @if (old('gedung') == $data->gedung)
-                                  <option value="{{ $data->gedung }}" selected>{{ $data->gedung }}</option>
-                              @else
-                                  <option value="{{ $data->gedung }}">{{ $data->gedung }}</option>
-                              @endif
-                            @endforeach
-                          </select>
-                          @error('gedung')
-                          <span class="invalid-feedback">
-                              {{ $message }}
-                          </span>
-                          @enderror
-                        </div>
-                        <div class="form-group">
-                          <label for="kamar">Kamar</label>
-                          <input type="number" value="{{ old('kamar') }}" class="form-control  @error('kamar') is-invalid @enderror" id="kamar" placeholder="Kamar" name="kamar" >
-                          <small  class="form-text text-muted">
-                            Input Must Number Ex : 101
-                          </small>
-                          @error('kamar')
-                          <span class="invalid-feedback">
-                              {{ $message }}
-                          </span>
-                          @enderror
-                        </div>
                         <div class="form-group">
                           <label for="jenjang">Jenjang</label>
                           <select class="custom-select @error('jenjang') is-invalid @enderror"  id="jenjang" name="jenjang" required>

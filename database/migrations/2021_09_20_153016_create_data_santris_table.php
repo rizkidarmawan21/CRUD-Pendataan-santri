@@ -19,9 +19,6 @@ class CreateDataSantrisTable extends Migration
             $table->text('alamat');
             $table->string('no_telp');
             $table->string('nama_ortu');
-            $table->string('kampus');
-            $table->string('gedung');
-            $table->string('kamar');
             $table->string('jenjang');
             $table->string('kelas');
             $table->timestamps();

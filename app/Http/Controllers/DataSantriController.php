@@ -55,9 +55,6 @@ class DataSantriController extends Controller
             'alamat'    => 'required',
             'no_telp'   => 'required',
             'nama_ortu' => 'required',
-            'kampus'    => 'required',
-            'gedung'    => 'required',
-            'kamar'     => 'required',
             'jenjang'   => 'required',
             'kelas'     => 'required'
         ]);
@@ -109,9 +106,6 @@ class DataSantriController extends Controller
             'alamat'    => 'required',
             'no_telp'   => 'required',
             'nama_ortu' => 'required',
-            'kampus'    => 'required',
-            'gedung'    => 'required',
-            'kamar'     => 'required',
             'jenjang'   => 'required',
             'kelas'     => 'required'
         ]);

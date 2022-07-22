@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'Pendataan Sementara',
+    'title' => 'Siasan | Sistem Akademik Santri',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -324,25 +324,34 @@ return [
 
     'menu' => [
         [
-                    'text'    => 'Data Management',
-                    'icon'    => 'fas fa-fw fa-database',
-
-                    'submenu' => [
-                        [
-                            'text' => 'Data Santri',
-                            'url'     => '/datasantri',
-                        ],
-                        [
-                            'text' => 'Gedung',
-                            'url'  => '/gedung',
-                        ],
-
-                    ],
+            'text' => 'Data Santri',
+            'url'     => '/datasantri',
+            'icon'  => 'fas fa-fw fa-users',
         ],
         [
-            'text' => 'User',
-            'url'  => '/users',
-            'icon'  => 'fas fa-fw fa-users',
+            'text' => 'Kamar Santri',
+            'url'     => '/kamar/santri',
+            'icon'  => 'fa fa-bed',
+        ],
+        [
+            'text'    => 'Settings Management',
+            'icon'    => 'fas fa-fw fa-database',
+
+            'submenu' => [
+                [
+                    'text' => 'Setting Gedung',
+                    'url'  => '/gedung',
+                ],
+                [
+                    'text' => 'Setting Kamar',
+                    'url'     => '/kamar',
+                ],
+                [
+                    'text' => 'Setting User',
+                    'url'  => '/users',
+                ]
+
+            ],
         ],
     ],
 
@@ -435,11 +444,11 @@ return [
             ],
         ],
 
- 
+
         // <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
         // <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
         // <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.11.2/b-2.0.0/b-colvis-2.0.0/b-html5-2.0.0/b-print-2.0.0/date-1.1.1/r-2.2.9/sp-1.4.0/datatables.min.js"></script>
-        
+
 
         'Select2' => [
             'active' => true,

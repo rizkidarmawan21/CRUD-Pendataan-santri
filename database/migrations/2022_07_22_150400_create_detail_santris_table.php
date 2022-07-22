@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateGedungsTable extends Migration
+class CreateDetailSantrisTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,8 @@ class CreateGedungsTable extends Migration
      */
     public function up()
     {
-        Schema::create('gedungs', function (Blueprint $table) {
+        Schema::create('detail_santris', function (Blueprint $table) {
             $table->id();
-            $table->string('kampus');
-            $table->string('gedung');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -29,6 +27,6 @@ class CreateGedungsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('gedungs');
+        Schema::dropIfExists('detail_santris');
     }
 }
