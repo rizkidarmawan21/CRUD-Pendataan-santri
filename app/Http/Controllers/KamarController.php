@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DataSantri;
+use App\Models\DetailSantri;
 use App\Models\Gedung;
 use App\Models\Kamar;
 use Illuminate\Http\Request;
@@ -30,23 +31,38 @@ class KamarController extends Controller
         $kampus = $request->input('kampus');
         $gedung = $request->input('gedung');
         $kamar = $request->input('kamar');
-        // dd($kampus);
-        if($kampus){
-            $dataGedungBasedOnKampus = Gedung::with(['kamar'])->where('kampus',$kampus)->get();
-        }else {
+
+        if ($kampus) {
+            $dataGedungBasedOnKampus = Gedung::with(['kamar'])->where('kampus', $kampus)->get();
+
+        } else {
             $dataGedungBasedOnKampus = Gedung::with(['kamar'])->get();
         }
-           
-        $dataSantri = DataSantri::all();
-        if($kamar)
-            $dataSantri = DataSantri::all();
-        
 
-        return view('kamar.santri',[
+
+        $dataSantri = DetailSantri::with(['santri', 'kamar.gedung']);
+        if ($gedung && $kamar) {
+            $getGedung = Gedung::where('gedung', $gedung)->firstOrFail();
+            $getKamar = Kamar::where(['id_gedung'=>$getGedung->id,'kamar'=> $kamar])->firstOrFail();
+            $dataSantri = $dataSantri->where('id_kamar',$getKamar->id);
+        }
+
+        if($kampus) {
+            // data santri by kampus
+            $dataSantri = $dataSantri->whereHas('kamar.gedung', function ($query) use ($kampus) {
+                $query->where('kampus','=', $kampus);
+            });
+        }
+
+        // dd(Kamar::with('gedung')->get());
+
+        return view('kamar.santri', [
             'kampus' => $kampus,
             'gedung' => $gedung,
             'kamar' => $kamar,
-            'dataSantri' => '',
+            'dataSantri' => $dataSantri->get(),
+            'masterSantri' => DataSantri::all(),
+            'masterKamar' => Gedung::with(['kamar'])->get(),
             'gedungKampus' => $dataGedungBasedOnKampus
         ]);
     }
@@ -120,6 +136,8 @@ class KamarController extends Controller
      */
     public function destroy(Kamar $kamar)
     {
-        //
+        $kamar->delete();
+        DetailSantri::where('id_kamar', $kamar->id)->delete();
+        return redirect('/kamar')->with('success_message', "Data kamar $kamar->kamar  berhasil dihapus");
     }
 }

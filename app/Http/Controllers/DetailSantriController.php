@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DataSantri;
 use App\Models\DetailSantri;
+use App\Models\Kamar;
 use Illuminate\Http\Request;
 
 class DetailSantriController extends Controller
@@ -35,7 +37,21 @@ class DetailSantriController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validation =  $request->validate([
+            'id_santri' => 'required|unique:detail_santris',
+            'id_kamar' => 'required',
+        ],[
+            'id_santri.required' => "Anda harus memilih santri !",
+            'id_santri.unique' => "Santri sudah terdaftar pada kamar tertentu !",
+            'id_kamar.required' => "Anda harus memilih kamar !",
+        ]);
+
+        DetailSantri::create($validation);
+        $kamar = Kamar::find($request->id_kamar);
+        $santri = DataSantri::find($request->id_santri);
+        return redirect('/detail-santri')->with('success_message', "Santri $santri->nama berhasil ditambahkan ke kamar $kamar->kamar");
+
+
     }
 
     /**
@@ -46,7 +62,7 @@ class DetailSantriController extends Controller
      */
     public function show(DetailSantri $detailSantri)
     {
-        //
+        
     }
 
     /**

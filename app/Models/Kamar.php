@@ -12,9 +12,13 @@ class Kamar extends Model
     use SoftDeletes;
     protected $guarded = ['id'];
 
-    public function gedung() 
+    public function gedung()
     {
-        return $this->belongsTo(Gedung::class,'id_gedung','id');
+        return $this->belongsTo(Gedung::class, 'id_gedung', 'id');
     }
 
+    public function detail()
+    {
+        return $this->hasOne(DetailSantri::class, 'id_kamar', 'id');
+    }
 }

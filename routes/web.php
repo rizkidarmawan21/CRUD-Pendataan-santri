@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\GedungController;
 use App\Http\Controllers\DataSantriController;
+use App\Http\Controllers\DetailSantriController;
 use App\Http\Controllers\KamarController;
 
 /*
@@ -47,5 +48,6 @@ Route::resource('datasantri', DataSantriController::class)
 
 Route::resource('gedung', GedungController::class)
     ->middleware('auth');
+Route::post('detail-santri',[DetailSantriController::class,'store'])->middleware('auth')->name('detail.santri');
 Route::get('kamar/santri',[KamarController::class,'kamarSantri'])->middleware('auth')->name('kamar.santri');
 Route::resource('kamar', KamarController::class)->middleware('auth');

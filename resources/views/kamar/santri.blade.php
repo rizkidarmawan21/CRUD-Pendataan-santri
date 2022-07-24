@@ -1,6 +1,7 @@
 @extends('adminlte::page')
 
 @section('title', 'Data Kamar Santri')
+@section('plugins.Select2', true)
 @section('content_header')
 <h1 class="m-0 text-dark">Data Santri dan Kamar {!! $kampus ? "&raquo; {$kampus}" : ''!!}{!! $gedung ? "&raquo;
     {$gedung}" : '' !!} {!! $kamar ? "&raquo; {$kamar}" : '' !!}</h1>
@@ -14,7 +15,20 @@
             <div class="card-body">
                 <!-- Default dropright button -->
                 {{-- menu section --}}
+                @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
                 <div class="d-flex">
+                    <div class="mr-auto">
+                        <button type="submit" data-toggle="modal" data-target="#exampleModal"
+                            class="btn btn-success">Ploting Kamar Santri</button>
+                    </div>
                     <div class="btn-group dropright mb-3">
                         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
                             aria-expanded="false">
@@ -39,35 +53,43 @@
                         <div class="dropdown-menu">
 
                             @foreach($gedungKampus as $gedung)
-                            <h6 class="dropdown-header">{{ $gedung->gedung }}</h6>
+                            <h6 class="dropdown-header">G. {{ $gedung->gedung }}</h6>
                             {{-- {{ dd($gedung) }} --}}
-                            @foreach($gedung->kamar as $kamar)
+                            @forelse($gedung->kamar as $kamar)
                             <a class="dropdown-item"
-                                href="{{ route('kamar.santri',['kampus'=>$gedung->kampus,'kamar'=>$kamar->kamar,'gedung'=>$kamar->id_gedung]) }}">
+                                href="{{ route('kamar.santri',['kampus'=>$gedung->kampus,'kamar'=>$kamar->kamar,'gedung'=>$gedung->gedung]) }}">
                                 {{$kamar->kamar }}
                             </a>
-                            @endforeach
+                            @empty
+                            <a class="dropdown-item disabled text-sm">Kamar Kosong</a>
+                            @endforelse
                             @endforeach
                         </div>
                     </div>
                 </div>
 
+                <hr>
+
                 <div class="d-flex">
 
-                    <div class="card d-lg-block d-none mr-4" style="width: 12rem;">
+                    <div class="card h- d-lg-block d-none mr-4" style="width: 12rem; border-radius: 0%">
                         @foreach($gedungKampus as $gedung)
-                        <div class="card-header bg-secondary">
-                            {{ $gedung->gedung }}
+                        <div class="p-2 bg-secondary">
+                            G. {{ $gedung->gedung }}
                         </div>
                         <ul class="list-group list-group-flush">
-                            @foreach($gedung->kamar as $kamar)
+                            @forelse($gedung->kamar as $kamar)
                             <a
-                                href="{{ route('kamar.santri',['kampus'=>$gedung->kampus,'kamar'=>$kamar->kamar,'gedung'=>$kamar->id_gedung]) }}">
+                                href="{{ route('kamar.santri',['kampus'=>$gedung->kampus,'kamar'=>$kamar->kamar,'gedung'=>$gedung->gedung]) }}">
                                 <li class="list-group-item">
                                     {{$kamar->kamar }}
                                 </li>
                             </a>
-                            @endforeach
+                            @empty
+                            <li class="list-group-item">
+                                <h6 class="text-center text-sm">Belum ada kamar</h6>
+                            </li>
+                            @endforelse
                         </ul>
                         @endforeach
 
@@ -89,13 +111,15 @@
                                     <th>Opsi</th>
                                 </tr>
                             </thead>
+                            @foreach($dataSantri as $item)
+
                             <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $item->santri->nama}}</td>
+                                <td>{{ $item->santri->jenjang}} {{ $item->santri->kelas}}</td>
+                                <td>{{ $item->kamar->gedung->kampus}}</td>
+                                <td>{{ $item->kamar->gedung->gedung}}</td>
+                                <td>{{ $item->kamar->kamar}}</td>
                                 <td>
                                     <a class="badge bg-secondary border-0" href="/datasantri//edit">
                                         EDIT
@@ -103,7 +127,7 @@
                                     <a class="badge bg-info border-0" href="/datasantri//edit">
                                         DETAIL
                                     </a>
-                                    <form action="/datasantri/" method="post" class="d-inline">
+                                    <form action="/datasantri/{{ $item->id }}" method="post" class="d-inline">
                                         @method('delete')
                                         @csrf
                                         <button class="badge bg-danger border-0"
@@ -113,6 +137,7 @@
                                     </form>
                                 </td>
                             </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -129,6 +154,58 @@
     </div>
     <strong>Application Created with ❤️ By <a target="blank" href="http://rizkidarmawan21.github.io">Darms</a>.</strong>
 </footer>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ploting Kamar Santri</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('detail.santri') }}" method="post">
+                    @csrf
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Santri</label>
+                                <select class="form-control select2" style="width: 100%;" name="id_santri">
+                                    <option value="" selected>Pilih Santri</option>
+                                    @foreach($masterSantri as $mSantri)
+                                    <option value="{{ $mSantri->id }}">{{ $mSantri->nama }} - {{ $mSantri->jenjang }} {{
+                                        $mSantri->kelas }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Kamar</label>
+                                <select class="form-control select2" style="width: 100%;" name="id_kamar">
+                                    <option value="" selected>Pilih Kamar</option>
+                                    @foreach($masterKamar as $gedung)
+                                    <option disabled>G. {{ $gedung->gedung }}</option>
+                                    {{-- {{ dd($gedung) }} --}}
+                                    @foreach($gedung->kamar as $kamar)
+                                    <option value="{{ $kamar->id }}">
+                                        {{$kamar->kamar }} - {{ $gedung->gedung }}
+                                    </option>
+                                    @endforeach
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
 @stop
 
 
@@ -142,5 +219,10 @@
             "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
         }).buttons().container().appendTo( '#example_wrapper .col-md-6:eq(0)' );
     });
+</script>
+<script>
+    //Initialize Select2 Elements
+    $('.select2').select2()
+    
 </script>
 @endpush

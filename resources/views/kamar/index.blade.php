@@ -32,9 +32,6 @@
                                         <td>{{ $kamar->gedung->gedung }}</td>
                                         <td>{{ $kamar->kamar }}</td>
                                         <td>
-                                            <a class="badge bg-info border-0" href="/kamar//edit">
-                                                EDIT
-                                            </a>
                                             <form action="/kamar/{{$kamar->id}}" method="post" class="d-inline">
                                                 @method('delete')
                                                 @csrf

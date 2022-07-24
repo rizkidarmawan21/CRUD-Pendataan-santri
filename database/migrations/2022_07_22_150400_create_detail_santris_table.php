@@ -15,7 +15,8 @@ class CreateDetailSantrisTable extends Migration
     {
         Schema::create('detail_santris', function (Blueprint $table) {
             $table->id();
-            $table->softDeletes();
+            $table->foreignId('id_santri');
+            $table->foreignId('id_kamar');
             $table->timestamps();
         });
     }
