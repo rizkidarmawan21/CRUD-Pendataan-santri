@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class DataSantri extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
     protected $fillable = ['id', 'nama', 'alamat', 'no_telp', 'nama_ortu', 'jenjang', 'kelas'];
 

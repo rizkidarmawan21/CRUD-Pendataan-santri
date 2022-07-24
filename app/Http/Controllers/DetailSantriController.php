@@ -40,7 +40,7 @@ class DetailSantriController extends Controller
         $validation =  $request->validate([
             'id_santri' => 'required|unique:detail_santris',
             'id_kamar' => 'required',
-        ],[
+        ], [
             'id_santri.required' => "Anda harus memilih santri !",
             'id_santri.unique' => "Santri sudah terdaftar pada kamar tertentu !",
             'id_kamar.required' => "Anda harus memilih kamar !",
@@ -49,9 +49,7 @@ class DetailSantriController extends Controller
         DetailSantri::create($validation);
         $kamar = Kamar::find($request->id_kamar);
         $santri = DataSantri::find($request->id_santri);
-        return redirect('/detail-santri')->with('success_message', "Santri $santri->nama berhasil ditambahkan ke kamar $kamar->kamar");
-
-
+        return redirect('/kamar/santri')->with('success_message', "Santri $santri->nama berhasil ditambahkan ke kamar $kamar->kamar");
     }
 
     /**
@@ -62,7 +60,6 @@ class DetailSantriController extends Controller
      */
     public function show(DetailSantri $detailSantri)
     {
-        
     }
 
     /**
@@ -94,8 +91,14 @@ class DetailSantriController extends Controller
      * @param  \App\Models\DetailSantri  $detailSantri
      * @return \Illuminate\Http\Response
      */
-    public function destroy(DetailSantri $detailSantri)
+    public function destroy($id)
     {
-        //
+        DetailSantri::where('id',$id)->delete();
+        try {
+            return redirect('/kamar/santri')->with('success_message', "Data berhasil di hapus");
+        } catch (\Exception $e) {
+            return redirect('/kamar/santri')->with('error_message', "Gagal menghapus data");
+        }
+
     }
 }

@@ -50,7 +50,7 @@
                             aria-expanded="false">
                             Kamar
                         </button>
-                        <div class="dropdown-menu">
+                        <div class="dropdown-menu" style="overflow-y: scroll ; height: 20rem;">
 
                             @foreach($gedungKampus as $gedung)
                             <h6 class="dropdown-header">G. {{ $gedung->gedung }}</h6>
@@ -72,7 +72,7 @@
 
                 <div class="d-flex">
 
-                    <div class="card h- d-lg-block d-none mr-4" style="width: 12rem; border-radius: 0%">
+                    <div class="card h- d-lg-block d-none mr-4" style="width: 15rem; border-radius: 0% ; height: 25rem; overflow-y: scroll">
                         @foreach($gedungKampus as $gedung)
                         <div class="p-2 bg-secondary">
                             G. {{ $gedung->gedung }}
@@ -121,13 +121,13 @@
                                 <td>{{ $item->kamar->gedung->gedung}}</td>
                                 <td>{{ $item->kamar->kamar}}</td>
                                 <td>
-                                    <a class="badge bg-secondary border-0" href="/datasantri//edit">
+                                    <a class="badge bg-secondary border-0" href="/datasantri/edit">
                                         EDIT
                                     </a>
-                                    <a class="badge bg-info border-0" href="/datasantri//edit">
+                                    <a class="badge bg-info border-0" href="{{ route('detail.santri.delete',$item->id) }}">
                                         DETAIL
                                     </a>
-                                    <form action="/datasantri/{{ $item->id }}" method="post" class="d-inline">
+                                    <form action="{{ route('detail.santri.delete',$item->id) }}" method="post" class="d-inline">
                                         @method('delete')
                                         @csrf
                                         <button class="badge bg-danger border-0"
@@ -189,7 +189,7 @@
                                     {{-- {{ dd($gedung) }} --}}
                                     @foreach($gedung->kamar as $kamar)
                                     <option value="{{ $kamar->id }}">
-                                        {{$kamar->kamar }} - {{ $gedung->gedung }}
+                                       {{ $gedung->kampus }} - {{ $gedung->gedung }} - {{$kamar->kamar }} 
                                     </option>
                                     @endforeach
                                     @endforeach

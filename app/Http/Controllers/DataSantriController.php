@@ -7,6 +7,7 @@ use App\Models\DataSantri;
 use Illuminate\Http\Request;
 use App\Exports\DataSantriExport;
 use App\Imports\DataSantriImport;
+use App\Models\DetailSantri;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
 
@@ -123,6 +124,7 @@ class DataSantriController extends Controller
     public function destroy(DataSantri $datasantri)
     {
 
+        DetailSantri::where('id_santri',$datasantri->id)->delete();
         $datasantri->delete();
         return redirect('/datasantri')->with('success_message', 'Data santri dengan nama '.$datasantri->nama.' berhasil dihapus');
     }
