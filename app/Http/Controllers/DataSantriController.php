@@ -34,12 +34,12 @@ class DataSantriController extends Controller
     public function create()
     {
 
-        return view('data.create',[
+        return view('data.create', [
             'gedung' => Gedung::all(),
-            'gedungKampus1' =>Gedung::where('kampus','Kampus 1')->get(),
-            'gedungKampus2' =>Gedung::where('kampus','Kampus 2')->get(),
-            'gedungKampus3' =>Gedung::where('kampus','Kampus 3')->get(),
-            'gedungKampus4' =>Gedung::where('kampus','Kampus 4')->get(),
+            'gedungKampus1' => Gedung::where('kampus', 'Kampus 1')->get(),
+            'gedungKampus2' => Gedung::where('kampus', 'Kampus 2')->get(),
+            'gedungKampus3' => Gedung::where('kampus', 'Kampus 3')->get(),
+            'gedungKampus4' => Gedung::where('kampus', 'Kampus 4')->get(),
         ]);
     }
 
@@ -57,11 +57,12 @@ class DataSantriController extends Controller
             'no_telp'   => 'required',
             'nama_ortu' => 'required',
             'jenjang'   => 'required',
-            'kelas'     => 'required'
+            'kelas'     => 'required',
+            'kampus'     => 'required'
         ]);
 
         DataSantri::create($data);
-        return redirect('/datasantri')->with('success_message', 'Data santri dengan nama '.$request->nama.' berhasil ditambah');
+        return redirect('/datasantri')->with('success_message', 'Data santri dengan nama ' . $request->nama . ' berhasil ditambah');
     }
 
     /**
@@ -72,7 +73,6 @@ class DataSantriController extends Controller
      */
     public function show(DataSantri $datasantri)
     {
-      
     }
 
     /**
@@ -83,14 +83,16 @@ class DataSantriController extends Controller
      */
     public function edit(DataSantri $datasantri)
     {
-        return view('data.edit',
-        [
-            'data' => $datasantri,
-            'gedungKampus1' =>Gedung::where('kampus','Kampus 1')->get(),
-            'gedungKampus2' =>Gedung::where('kampus','Kampus 2')->get(),
-            'gedungKampus3' =>Gedung::where('kampus','Kampus 3')->get(),
-            'gedungKampus4' =>Gedung::where('kampus','Kampus 4')->get(),
-        ]);
+        return view(
+            'data.edit',
+            [
+                'data' => $datasantri,
+                'gedungKampus1' => Gedung::where('kampus', 'Kampus 1')->get(),
+                'gedungKampus2' => Gedung::where('kampus', 'Kampus 2')->get(),
+                'gedungKampus3' => Gedung::where('kampus', 'Kampus 3')->get(),
+                'gedungKampus4' => Gedung::where('kampus', 'Kampus 4')->get(),
+            ]
+        );
     }
 
     /**
@@ -108,11 +110,12 @@ class DataSantriController extends Controller
             'no_telp'   => 'required',
             'nama_ortu' => 'required',
             'jenjang'   => 'required',
-            'kelas'     => 'required'
+            'kelas'     => 'required',
+            'kampus'     => 'required'
         ]);
 
         $datasantri->update($data);
-        return redirect('/datasantri')->with('success_message', 'Data santri dengan nama '.$request->nama.' berhasil diedit');
+        return redirect('/datasantri')->with('success_message', 'Data santri dengan nama ' . $request->nama . ' berhasil diedit');
     }
 
     /**
@@ -124,24 +127,26 @@ class DataSantriController extends Controller
     public function destroy(DataSantri $datasantri)
     {
 
-        DetailSantri::where('id_santri',$datasantri->id)->delete();
+        DetailSantri::where('id_santri', $datasantri->id)->delete();
         $datasantri->delete();
-        return redirect('/datasantri')->with('success_message', 'Data santri dengan nama '.$datasantri->nama.' berhasil dihapus');
+        return redirect('/datasantri')->with('success_message', 'Data santri dengan nama ' . $datasantri->nama . ' berhasil dihapus');
     }
 
 
-    public function exportexcel(){
+    public function exportexcel()
+    {
         return Excel::download(new DataSantriExport, 'datasantri.xlsx');
     }
 
-    public function import(Request $request){
+    public function import(Request $request)
+    {
         Excel::import(new DataSantriImport, $request->file('excel'));
-        
+
         return redirect('/datasantri')->with('success_message', 'Data santri  berhasil diimport');
     }
 
-    public function download(){
+    public function download()
+    {
         return Storage::disk('local')->download('public/download/template_datasantri.xlsx');
     }
-
 }

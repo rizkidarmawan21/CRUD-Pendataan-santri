@@ -27,6 +27,7 @@
                         <thead>
                             <tr>
                                 <th>No.</th>
+                                <th>Kampus</th>
                                 <th>Nama</th>
                                 <th>Alamat</th>
                                 <th>Telepon</th>
@@ -38,13 +39,17 @@
                         <tbody @foreach($data_santris as $key=> $data)
                             <tr>
                                 <td>{{$key+1}}</td>
+                                <td>{{$data->kampus}}</td>
                                 <td>{{$data->nama}}</td>
                                 <td>{{$data->alamat}}</td>
-                                <td>{{$data->no_telp}}</td>
+                                <td>{{ convertNumber($data->no_telp) }}</td>
                                 <td>{{$data->nama_ortu}}</td>
                                 <td>{{$data->jenjang}} {{$data->kelas}}</td>
                                 <td>
                                     <a class="badge bg-info border-0" href="/datasantri/{{ $data->id }}/edit">
+                                        Detail
+                                    </a>
+                                    <a class="badge bg-warning border-0" href="/datasantri/{{ $data->id }}/edit">
                                         EDIT
                                     </a>
                                     <form action="/datasantri/{{  $data->id }}" method="post" class="d-inline">

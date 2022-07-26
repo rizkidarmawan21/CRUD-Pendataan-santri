@@ -339,10 +339,6 @@ return [
 
             'submenu' => [
                 [
-                    'text' => 'Master Santri',
-                    'url'     => '/datasantri',
-                ],
-                [
                     'text' => 'Setting Gedung',
                     'url'  => '/gedung',
                 ],

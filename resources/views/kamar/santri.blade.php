@@ -53,7 +53,7 @@
                         <div class="dropdown-menu" style="overflow-y: scroll ; height: 20rem;">
 
                             @foreach($gedungKampus as $gedung)
-                            <h6 class="dropdown-header">G. {{ $gedung->gedung }}</h6>
+                            <h6 class="dropdown-header bg-secondary">G. {{ $gedung->gedung }}</h6>
                             {{-- {{ dd($gedung) }} --}}
                             @forelse($gedung->kamar as $kamar)
                             <a class="dropdown-item"
