@@ -61,14 +61,14 @@
                                         <div class="form-group">
                                             <label for="kampus">Kampus</label>
                                             <select class="custom-select @error('kampus') is-invalid @enderror" id="kampus"  name="kampus" required>
-                                                <option>- Select Kampus -</option>
+                                                <option value="">- Select Kampus -</option>
                                                 @if (old('kampus') == 'Kampus 1')
                                                 <option value="Kampus 1" selected>Kampus 1</option>
                                                 @elseif (old('kampus') == 'Kampus 2')
                                                 <option value="Kampus 2" selected>Kampus 2</option>
                                                 @elseif (old('kampus') == 'Kampus 3')
                                                 <option value="Kampus 3" selected>Kampus 3</option>
-                                                @elseif (old('kampus') == 'Kampus 3')
+                                                @elseif (old('kampus') == 'Kampus 4')
                                                 <option value="Kampus 4" selected>Kampus 4</option>
                                                 @else
                                                 <option value="Kampus 1">Kampus 1</option>

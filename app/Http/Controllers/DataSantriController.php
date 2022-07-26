@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Exports\DataSantriExport;
 use App\Imports\DataSantriImport;
 use App\Models\DetailSantri;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
 
@@ -20,6 +22,9 @@ class DataSantriController extends Controller
      */
     public function index()
     {
+        Log::info("call function index datasantri", [
+            "username" => Auth::user()->name
+        ]);
         $data_santris = DataSantri::all();
         return view('data.index', [
             'data_santris' => $data_santris
@@ -51,6 +56,7 @@ class DataSantriController extends Controller
      */
     public function store(Request $request)
     {
+
         $data = $request->validate([
             'nama'      => 'required',
             'alamat'    => 'required',
@@ -61,7 +67,11 @@ class DataSantriController extends Controller
             'kampus'     => 'required'
         ]);
 
-        DataSantri::create($data);
+        $data = DataSantri::create($data);
+        Log::info("Create data santri", [
+            "username" => Auth::user()->name,
+            "id_datasantri" => $data->id
+        ]);
         return redirect('/datasantri')->with('success_message', 'Data santri dengan nama ' . $request->nama . ' berhasil ditambah');
     }
 
@@ -83,6 +93,9 @@ class DataSantriController extends Controller
      */
     public function edit(DataSantri $datasantri)
     {
+        Log::info("call function edit datasantri", [
+            "username" => Auth::user()->name
+        ]);
         return view(
             'data.edit',
             [
@@ -104,6 +117,7 @@ class DataSantriController extends Controller
      */
     public function update(Request $request, DataSantri $datasantri)
     {
+
         $data = $request->validate([
             'nama'      => 'required',
             'alamat'    => 'required',
@@ -115,6 +129,10 @@ class DataSantriController extends Controller
         ]);
 
         $datasantri->update($data);
+        Log::info("Edit data santri", [
+            "username" => Auth::user()->name,
+            "id_datasantri" => $datasantri->id
+        ]);
         return redirect('/datasantri')->with('success_message', 'Data santri dengan nama ' . $request->nama . ' berhasil diedit');
     }
 
@@ -129,17 +147,27 @@ class DataSantriController extends Controller
 
         DetailSantri::where('id_santri', $datasantri->id)->delete();
         $datasantri->delete();
+        Log::info("Delete data santri", [
+            "username" => Auth::user()->name,
+            "id_datasantri" => $datasantri->id
+        ]);
         return redirect('/datasantri')->with('success_message', 'Data santri dengan nama ' . $datasantri->nama . ' berhasil dihapus');
     }
 
 
     public function exportexcel()
     {
+        Log::info("Export data santri", [
+            "username" => Auth::user()->name
+        ]);
         return Excel::download(new DataSantriExport, 'datasantri.xlsx');
     }
 
     public function import(Request $request)
     {
+        Log::info("Import data santri", [
+            "username" => Auth::user()->name
+        ]);
         Excel::import(new DataSantriImport, $request->file('excel'));
 
         return redirect('/datasantri')->with('success_message', 'Data santri  berhasil diimport');
@@ -147,6 +175,9 @@ class DataSantriController extends Controller
 
     public function download()
     {
+        Log::info("Download template excel", [
+            "username" => Auth::user()->name
+        ]);
         return Storage::disk('local')->download('public/download/template_datasantri.xlsx');
     }
 }

@@ -72,7 +72,8 @@
 
                 <div class="d-flex">
 
-                    <div class="card h- d-lg-block d-none mr-4" style="width: 15rem; border-radius: 0% ; height: 25rem; overflow-y: scroll">
+                    <div class="card h- d-lg-block d-none mr-4"
+                        style="width: 15rem; border-radius: 0% ; height: 25rem; overflow-y: scroll">
                         @foreach($gedungKampus as $gedung)
                         <div class="p-2 bg-secondary">
                             G. {{ $gedung->gedung }}
@@ -124,10 +125,12 @@
                                     <a class="badge bg-secondary border-0" href="/datasantri/edit">
                                         EDIT
                                     </a>
-                                    <a class="badge bg-info border-0" href="{{ route('detail.santri.delete',$item->id) }}">
+                                    <a class="badge bg-info border-0"
+                                        href="{{ route('detail.santri.delete',$item->id) }}">
                                         DETAIL
                                     </a>
-                                    <form action="{{ route('detail.santri.delete',$item->id) }}" method="post" class="d-inline">
+                                    <form action="{{ route('detail.santri.delete',$item->id) }}" method="post"
+                                        class="d-inline">
                                         @method('delete')
                                         @csrf
                                         <button class="badge bg-danger border-0"
@@ -171,16 +174,6 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>Santri</label>
-                                <select class="form-control select2" style="width: 100%;" name="id_santri">
-                                    <option value="" selected>Pilih Santri</option>
-                                    @foreach($masterSantri as $mSantri)
-                                    <option value="{{ $mSantri->id }}">{{ $mSantri->nama }} - {{ $mSantri->jenjang }} {{
-                                        $mSantri->kelas }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group">
                                 <label>Kamar</label>
                                 <select class="form-control select2" style="width: 100%;" name="id_kamar">
                                     <option value="" selected>Pilih Kamar</option>
@@ -189,9 +182,20 @@
                                     {{-- {{ dd($gedung) }} --}}
                                     @foreach($gedung->kamar as $kamar)
                                     <option value="{{ $kamar->id }}">
-                                       {{ $gedung->kampus }} - {{ $gedung->gedung }} - {{$kamar->kamar }} 
+                                        {{ $gedung->kampus }} - {{ $gedung->gedung }} - {{$kamar->kamar }}
                                     </option>
                                     @endforeach
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Santri</label>
+                                <select class="form-control select2" multiple="multiple" data-placeholder="Pilih Santri"
+                                    style="width: 100%;" name="id_santri[]">
+
+                                    @foreach($masterSantri as $mSantri)
+                                    <option value="{{ $mSantri->id }}">{{ $mSantri->nama }} - {{ $mSantri->jenjang }} {{
+                                        $mSantri->kelas }}</option>
                                     @endforeach
                                 </select>
                             </div>

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Gedung;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class GedungController extends Controller
 {
@@ -14,6 +16,9 @@ class GedungController extends Controller
      */
     public function index()
     {
+        Log::info("Call function index gedung", [
+            "username" => Auth::user()->name
+        ]);
         $data_gedung = Gedung::all();
         return view('gedung.index', [
             'data_gedung' => $data_gedung
@@ -43,7 +48,11 @@ class GedungController extends Controller
             'gedung' => 'required'
         ]);
 
-        Gedung::create($data);
+        $data = Gedung::create($data);
+        Log::info("Create data gedung", [
+            "username" => Auth::user()->name,
+            "id_gedung" => $data->id
+        ]);
         return redirect('/gedung')->with('success_message', 'Gedung '.$request->gedung.' berhasil ditambah');
     }
 
@@ -66,6 +75,10 @@ class GedungController extends Controller
      */
     public function edit(Gedung $gedung)
     {
+        Log::info("Call function edit gedung", [
+            "username" => Auth::user()->name
+        ]);   
+
         return view('gedung.edit',
         [
             'data' => $gedung
@@ -87,6 +100,10 @@ class GedungController extends Controller
         ]);
 
         $gedung->update($data);
+        Log::info("Update data gedung", [
+            "username" => Auth::user()->name,
+            "id_gedung" => $gedung->id
+        ]);
         return redirect('/gedung')->with('success_message', 'Gedung '.$request->gedung.' berhasil diedit');
     }
 
@@ -98,6 +115,10 @@ class GedungController extends Controller
      */
     public function destroy(Gedung $gedung)
     {
+        Log::info("Delete data gedung", [
+            "username" => Auth::user()->name,
+            "id_gedung" => $gedung->id
+        ]);
         $gedung->delete();
         return redirect('/gedung')->with('success_message', 'Gedung '.$gedung->gedung.' berhasil dihapus');
     }

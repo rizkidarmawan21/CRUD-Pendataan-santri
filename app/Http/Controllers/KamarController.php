@@ -7,6 +7,8 @@ use App\Models\DetailSantri;
 use App\Models\Gedung;
 use App\Models\Kamar;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class KamarController extends Controller
 {
@@ -17,6 +19,9 @@ class KamarController extends Controller
      */
     public function index()
     {
+        Log::info("Call function index kamar", [
+            "username" => Auth::user()->name,
+        ]);
         return view('kamar.index', [
             'kamars'         => Kamar::with(['gedung'])->get(),
             'gedungKampus1' => Gedung::where('kampus', 'Kampus 1')->get(),
@@ -28,6 +33,9 @@ class KamarController extends Controller
 
     public function kamarSantri(Request $request)
     {
+        Log::info("Get data kamar for menu", [
+            "username" => Auth::user()->name
+        ]);
         $kampus = $request->input('kampus');
         $gedung = $request->input('gedung');
         $kamar = $request->input('kamar');
@@ -36,7 +44,7 @@ class KamarController extends Controller
             $dataGedungBasedOnKampus = Gedung::with(['kamar'])->where('kampus', $kampus)->get();
 
         } else {
-            $dataGedungBasedOnKampus = Gedung::with(['kamar'])->get();
+            $dataGedungBasedOnKampus = Gedung::with(['kamar'])->orderBy('kampus')->get();
         }
 
 
@@ -62,7 +70,7 @@ class KamarController extends Controller
             'kamar' => $kamar,
             'dataSantri' => $dataSantri->get(),
             'masterSantri' => DataSantri::all(),
-            'masterKamar' => Gedung::with(['kamar'])->get(),
+            'masterKamar' => Gedung::with(['kamar'])->orderBy('kampus')->get(),
             'gedungKampus' => $dataGedungBasedOnKampus
         ]);
     }
@@ -89,8 +97,12 @@ class KamarController extends Controller
             'id_gedung' => 'required',
             'kamar'     => 'required|integer'
         ]);
-
-        Kamar::create($data);
+        
+        $data = Kamar::create($data);
+        Log::info("Create data kamar", [
+            "username" => Auth::user()->name,
+            "id_kamar" => $data->id
+        ]);
         return redirect('/kamar')->with('success_message', 'Data kamar dengan nama ' . $request->kamar . ' berhasil ditambah');
     }
 
@@ -136,6 +148,10 @@ class KamarController extends Controller
      */
     public function destroy(Kamar $kamar)
     {
+        Log::info("Delete data gkamar", [
+            "username" => Auth::user()->name,
+            "id_kamar" => $kamar->id
+        ]);
         $kamar->delete();
         DetailSantri::where('id_kamar', $kamar->id)->delete();
         return redirect('/kamar')->with('success_message', "Data kamar $kamar->kamar  berhasil dihapus");

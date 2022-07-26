@@ -6,6 +6,8 @@ use App\Models\DataSantri;
 use App\Models\DetailSantri;
 use App\Models\Kamar;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class DetailSantriController extends Controller
 {
@@ -37,19 +39,28 @@ class DetailSantriController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
+        
         $validation =  $request->validate([
             'id_santri' => 'required|unique:detail_santris',
             'id_kamar' => 'required',
         ], [
             'id_santri.required' => "Anda harus memilih santri !",
-            'id_santri.unique' => "Santri sudah terdaftar pada kamar tertentu !",
+            'id_santri.unique' => "Ada santri yang sudah terdaftar pada kamar tertentu !",
             'id_kamar.required' => "Anda harus memilih kamar !",
         ]);
-
-        DetailSantri::create($validation);
+        for ($i=0; $i < sizeof($request->id_santri) ; $i++) { 
+            $validation['id_santri'] = $request->id_santri[$i];
+            DetailSantri::create($validation);
+        }
         $kamar = Kamar::find($request->id_kamar);
-        $santri = DataSantri::find($request->id_santri);
-        return redirect('/kamar/santri')->with('success_message', "Santri $santri->nama berhasil ditambahkan ke kamar $kamar->kamar");
+        Log::info("Plotting data santri", [
+            "username" => Auth::user()->name,
+            "id_santri" => $request->id_santri,
+            "id_kamar" => $request->id_kamar
+        ]);
+        // $santri = DataSantri::find($request->id_santri);
+        return redirect('/kamar/santri')->with('success_message', "Santri berhasil ditambahkan ke kamar $kamar->kamar");
     }
 
     /**
@@ -93,11 +104,15 @@ class DetailSantriController extends Controller
      */
     public function destroy($id)
     {
+        Log::info("Delete santri with kamar e", [
+            "username" => Auth::user()->name,
+            "id_detail" => $id
+        ]);
         DetailSantri::where('id',$id)->delete();
         try {
-            return redirect('/kamar/santri')->with('success_message', "Data berhasil di hapus");
+            return back()->with('success_message', "Data berhasil di hapus");
         } catch (\Exception $e) {
-            return redirect('/kamar/santri')->with('error_message', "Gagal menghapus data");
+            return back()->with('error_message', "Gagal menghapus data");
         }
 
     }
