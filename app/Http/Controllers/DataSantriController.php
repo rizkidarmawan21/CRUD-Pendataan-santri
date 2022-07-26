@@ -83,6 +83,11 @@ class DataSantriController extends Controller
      */
     public function show(DataSantri $datasantri)
     {
+        $dataSantriWithKamar = Datasantri::where('id',$datasantri->id)->with('detail.kamar.gedung')->first();
+        // dd($dataSantriWithKamar);
+        return view('data.details',[
+            'data_santri' => $dataSantriWithKamar,
+        ]);
     }
 
     /**

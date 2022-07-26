@@ -71,6 +71,7 @@ class DetailSantriController extends Controller
      */
     public function show(DetailSantri $detailSantri)
     {
+        
     }
 
     /**
