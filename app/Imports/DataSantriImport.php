@@ -23,6 +23,7 @@ class DataSantriImport implements ToModel
             'jenjang' => $row[4],
             'kelas' => $row[5],
             'kampus' => $row[6],
+            'jenkel' => $row[7],
         ]);
     }
 }

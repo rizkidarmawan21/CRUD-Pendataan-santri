@@ -64,9 +64,22 @@
         </div>
         <div class="col-lg-6">
           <div class="form-group">
+            <label for="jenkel">Jenis Kelamin</label>
+            <select class="custom-select @error('jenkel') is-invalid @enderror" id="jenkel" name="jenkel" required>
+              <option value="">- Select Jenkel -</option>
+              <option value="SANTRIWAN">SANTRIWAN</option>
+              <option value="SANTRIWATI">SANTRIWATI</option>
+            </select>
+            @error('jenkel')
+            <span class="invalid-feedback">
+              {{ $message }}
+            </span>
+            @enderror
+          </div>
+          <div class="form-group">
             <label for="jenjang">Jenjang</label>
             <select class="custom-select @error('jenjang') is-invalid @enderror" id="jenjang" name="jenjang" required>
-              <option>- Select Jenjang -</option>
+              <option value="">- Select Jenjang -</option>
               <option value="SMP 1">SMP 1</option>
               <option value="SMP 2">SMP 2</option>
               <option value="SMK">SMK</option>
@@ -79,6 +92,7 @@
             </span>
             @enderror
           </div>
+
           <div class="form-group">
             <label for="kelas">Kelas</label>
             <input type="text" value="{{ old('kelas') }}" class="form-control  @error('kelas') is-invalid @enderror"

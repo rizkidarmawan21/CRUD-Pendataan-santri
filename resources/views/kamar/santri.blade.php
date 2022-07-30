@@ -1,7 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Data Kamar Santri')
-@section('plugins.Select2', true)
+@section('title', 'Data Kamar Santri '. $kampus .' '. $gedung .' '. $kamar)
 @section('content_header')
 <h1 class="m-0 text-dark">Data Santri dan Kamar {!! $kampus ? "&raquo; {$kampus}" : ''!!}{!! $gedung ? "&raquo;
     {$gedung}" : '' !!} {!! $kamar ? "&raquo; {$kamar}" : '' !!}</h1>
@@ -98,53 +97,64 @@
                     {{-- end menu section --}}
 
                     {{-- table section --}}
-                    <div class="table-responsive">
 
-                        <table class="table table-hover table-bordered table-stripped" id="example2" width="100%">
-                            <thead>
-                                <tr>
-                                    <th>No.</th>
-                                    <th>Nama</th>
-                                    <th>Kelas</th>
-                                    <th>Kampus</th>
-                                    <th>Gedung</th>
-                                    <th>Kamar</th>
-                                    <th>Opsi</th>
-                                </tr>
-                            </thead>
-                            @foreach($dataSantri as $item)
-
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $item->santri->nama}}</td>
-                                <td>{{ $item->santri->jenjang}} {{ $item->santri->kelas}}</td>
-                                <td>{{ $item->kamar->gedung->kampus}}</td>
-                                <td>{{ $item->kamar->gedung->gedung}}</td>
-                                <td>{{ $item->kamar->kamar}}</td>
-                                <td>
-                                    <a class="badge bg-secondary border-0" href="/datasantri/edit">
-                                        EDIT
-                                    </a>
-                                    <a class="badge bg-info border-0"
-                                        href="{{ route('detail.santri.delete',$item->id) }}">
-                                        DETAIL
-                                    </a>
-                                    <form action="{{ route('detail.santri.delete',$item->id) }}" method="post"
-                                        class="d-inline">
-                                        @method('delete')
-                                        @csrf
-                                        <button class="badge bg-danger border-0"
-                                            onclick="return confirm('ARE YOU SURE ?')">
-                                            DELETE
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
-                    </div>
                     {{-- end table section --}}
+
+                    @php
+                    $heads = [
+                    'No.',
+                    'Nama',
+                    'Kelas',
+                    'Kampus',
+                    'Gedung',
+                    'Kamar',
+                    ['label' => 'Actions', 'no-export' => true],
+                    ];
+
+
+                    $config = [
+                    //'order' => [[1, 'desc']],
+                    // 'columns' => [null, null, null, ['orderable' => false]],
+                    ];
+
+                    // Setup users data...
+                    $usersData = array();
+
+                    // Setup users data...
+                    $usersData = array();
+                    $i=1;
+                    foreach ($dataSantri as $item) {
+
+                    $usersData[] = [
+                    $i++,
+                    $item->santri->nama,
+                    $item->santri->jenjang." ".$item->santri->kelas,
+                    $item->kamar->gedung->kampus,
+                    $item->kamar->gedung->gedung,
+                    $item->kamar->kamar,
+                    '<nobr><a class="badge bg-secondary border-0"
+                            href="'.route('detail.santri.edit',$item->id).'">EDIT</a></nobr>
+                    <nobr><a class="badge bg-info border-0"
+                            href="'.route('datasantri.show',$item->santri->id).'">DETAIL</a></nobr>
+                    <nobr>
+                        <form action="'.route('detail.santri.delete',$item->id) .'" method="post" class="d-inline">
+                            <input type="hidden" name="_token" value="'.Session::token().'">
+                            <button class="badge bg-danger border-0" onclick="return confirm(`ARE YOU SURE ?`)">
+                                DELETE
+                            </button>
+                        </form>
+                    </nobr>
+                    '
+                    ];
+                    }
+
+                    $config['data'] = $usersData;
+                    @endphp
+
+
+                    {{-- With buttons --}}
+                    <x-adminlte-datatable id="table5" :heads="$heads" :config="$config" theme="light" striped hoverable
+                        with-buttons />
                 </div>
             </div>
 
@@ -227,6 +237,16 @@
 <script>
     //Initialize Select2 Elements
     $('.select2').select2()
+    
+</script>
+
+<script>
+    $.ajaxSetup({
+        headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
     
 </script>
 @endpush

@@ -19,6 +19,10 @@
                         <td>: {{ $data_santri->nama }}</td>
                     </tr>
                     <tr>
+                        <th width="20%">Jenis Kelamin</th>
+                        <td>: {{ $data_santri->jenkel }}</td>
+                    </tr>
+                    <tr>
                         <th width="20%">Alamat</th>
                         <td>: {{ $data_santri->alamat }}</td>
                     </tr>
@@ -41,7 +45,7 @@
                     </tr>
                 </table>
                 <div class="col-md-12 text-right">
-                    <button type="button" class="btn btn-primary ml-2">Edit</button>
+                    <a href="{{ route('datasantri.edit',$data_santri->id) }}" class="btn btn-primary ml-2">Edit</a>
                 </div>
             </div>
         </div>
@@ -88,9 +92,10 @@
                         </table>
                         <div class="col-md-12 text-right">
                             @if(!$data_santri->detail)
-                            <button type="button" class="btn btn-success ml-2">Masukkan kamar</button>
+                            <a href="{{ route('kamar.santri') }}" class="btn btn-success ml-2">Masukkan kamar</a>
+                            @else
+                            <a class="btn btn-primary ml-2">Edit</a>
                             @endif
-                            <button type="button" class="btn btn-primary ml-2">Edit</button>
                         </div>
                     </div>
                     <div class="tab-pane fade" id="custom-tabs-three-profile" role="tabpanel"

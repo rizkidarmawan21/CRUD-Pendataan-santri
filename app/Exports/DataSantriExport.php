@@ -13,11 +13,11 @@ class DataSantriExport implements FromCollection, WithHeadings
      */
     public function collection()
     {
-        return DataSantri::select('nama', 'alamat', 'no_telp', 'nama_ortu', 'jenjang', 'kelas', 'kampus')->get();
+        return DataSantri::select('nama', 'alamat', 'no_telp', 'nama_ortu', 'jenjang', 'kelas', 'kampus','jenkel')->get();
     }
 
     public function headings(): array
     {
-        return ['nama', 'alamat', 'no_telp', 'nama_ortu', 'jenjang', 'kelas', 'kampus'];
+        return ['nama', 'alamat', 'no_telp', 'nama_ortu', 'jenjang', 'kelas', 'kampus', 'jenkel'];
     }
 }

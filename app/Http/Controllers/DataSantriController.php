@@ -64,7 +64,8 @@ class DataSantriController extends Controller
             'nama_ortu' => 'required',
             'jenjang'   => 'required',
             'kelas'     => 'required',
-            'kampus'     => 'required'
+            'kampus'     => 'required',
+            'jenkel'     => 'required',
         ]);
 
         $data = DataSantri::create($data);
@@ -83,9 +84,9 @@ class DataSantriController extends Controller
      */
     public function show(DataSantri $datasantri)
     {
-        $dataSantriWithKamar = Datasantri::where('id',$datasantri->id)->with('detail.kamar.gedung')->first();
+        $dataSantriWithKamar = Datasantri::where('id', $datasantri->id)->with('detail.kamar.gedung')->first();
         // dd($dataSantriWithKamar);
-        return view('data.details',[
+        return view('data.details', [
             'data_santri' => $dataSantriWithKamar,
         ]);
     }
@@ -130,7 +131,8 @@ class DataSantriController extends Controller
             'nama_ortu' => 'required',
             'jenjang'   => 'required',
             'kelas'     => 'required',
-            'kampus'     => 'required'
+            'kampus'     => 'required',
+            'jenkel'     => 'required'
         ]);
 
         $datasantri->update($data);

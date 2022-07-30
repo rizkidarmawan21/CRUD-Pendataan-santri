@@ -21,13 +21,11 @@ use App\Http\Controllers\KamarController;
 
 Route::get('/', function () {
     return view('auth.login');
-});
+})->middleware('guest');
 
-Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Auth::routes();
 
 Route::get('/home', function () {
     return view('home');
@@ -48,7 +46,14 @@ Route::resource('datasantri', DataSantriController::class)
 
 Route::resource('gedung', GedungController::class)
     ->middleware('auth');
-Route::post('detail-santri',[DetailSantriController::class,'store'])->middleware('auth')->name('detail.santri');
-Route::delete('detail-santri/{id}',[DetailSantriController::class,'destroy'])->middleware('auth')->name('detail.santri.delete');
-Route::get('kamar/santri',[KamarController::class,'kamarSantri'])->middleware('auth')->name('kamar.santri');
+
+Route::post('detail-santri', [DetailSantriController::class, 'store'])->middleware('auth')->name('detail.santri');
+Route::post('detail-santri/{id}', [DetailSantriController::class, 'destroy'])->middleware('auth')->name('detail.santri.delete');
+
+Route::get('kamar/santri/{detailsantri}/edit', [DetailSantriController::class, 'edit'])->middleware('auth')->name('detail.santri.edit');
+Route::put('kamar/santri/{detailsantri}/update', [DetailSantriController::class, 'update'])->middleware('auth')->name('detail.santri.update');
+Route::get('kamar/santri', [KamarController::class, 'kamarSantri'])->middleware('auth')->name('kamar.santri');
+
 Route::resource('kamar', KamarController::class)->middleware('auth');
+
+Auth::routes();

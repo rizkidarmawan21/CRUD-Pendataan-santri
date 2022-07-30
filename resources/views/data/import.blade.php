@@ -43,8 +43,8 @@
                   <li>Input data pada kolom yang sudah disediakan</li>
                   <li>Setelah berhasil import data,hapus data judul yang ikut masuk kedalam aplikasi <a target="blank"
                       href="/video-import.mp4">Lihat contoh</a></li>
-
                 </ol>
+                <img src="{{ url('ss-import-example.jpg') }}" class="img-fluid" alt="">
               </div>
             </div>
           </div>

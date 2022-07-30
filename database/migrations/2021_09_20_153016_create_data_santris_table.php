@@ -22,6 +22,7 @@ class CreateDataSantrisTable extends Migration
             $table->string('jenjang');
             $table->string('kelas');
             $table->string('kampus');
+            $table->string('jenkel');
             $table->softDeletes();
             $table->timestamps();
         });

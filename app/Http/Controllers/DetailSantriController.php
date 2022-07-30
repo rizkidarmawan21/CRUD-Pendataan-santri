@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\DataSantri;
 use App\Models\DetailSantri;
+use App\Models\Gedung;
 use App\Models\Kamar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -40,7 +41,7 @@ class DetailSantriController extends Controller
     public function store(Request $request)
     {
         // dd($request);
-        
+
         $validation =  $request->validate([
             'id_santri' => 'required|unique:detail_santris',
             'id_kamar' => 'required',
@@ -49,7 +50,7 @@ class DetailSantriController extends Controller
             'id_santri.unique' => "Ada santri yang sudah terdaftar pada kamar tertentu !",
             'id_kamar.required' => "Anda harus memilih kamar !",
         ]);
-        for ($i=0; $i < sizeof($request->id_santri) ; $i++) { 
+        for ($i = 0; $i < sizeof($request->id_santri); $i++) {
             $validation['id_santri'] = $request->id_santri[$i];
             DetailSantri::create($validation);
         }
@@ -80,9 +81,18 @@ class DetailSantriController extends Controller
      * @param  \App\Models\DetailSantri  $detailSantri
      * @return \Illuminate\Http\Response
      */
-    public function edit(DetailSantri $detailSantri)
+    public function edit(DetailSantri $detailsantri)
     {
-        //
+        Log::info("Show edit santri", [
+            "username" => Auth::user()->name,
+        ]);
+        return view('kamar.edit', [
+            'data' => DetailSantri::where('id', $detailsantri->id)->first(),
+            'masterSantri' => DataSantri::all(),
+            'masterKamar' => Gedung::with(['kamar'])->orderBy('kampus')->get(),
+        ]);
+
+        
     }
 
     /**
@@ -92,9 +102,19 @@ class DetailSantriController extends Controller
      * @param  \App\Models\DetailSantri  $detailSantri
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, DetailSantri $detailSantri)
+    public function update(Request $request, DetailSantri $detailsantri)
     {
-        //
+        $validation =  $request->validate([
+            'id_santri' => 'required',
+            'id_kamar' => 'required',
+        ], [
+            'id_santri.required' => "Anda harus memilih santri !",
+            'id_santri.unique' => "Ada santri yang sudah terdaftar pada kamar tertentu !",
+            'id_kamar.required' => "Anda harus memilih kamar !",
+        ]);
+
+        $detailsantri->update($validation);
+        return redirect('/kamar/santri')->with('success_message', "Berhasil mengubah data santri");
     }
 
     /**
@@ -109,12 +129,11 @@ class DetailSantriController extends Controller
             "username" => Auth::user()->name,
             "id_detail" => $id
         ]);
-        DetailSantri::where('id',$id)->delete();
+        DetailSantri::where('id', $id)->delete();
         try {
             return back()->with('success_message', "Data berhasil di hapus");
         } catch (\Exception $e) {
             return back()->with('error_message', "Gagal menghapus data");
         }
-
     }
 }

@@ -398,57 +398,73 @@ return [
     */
 
     'plugins' => [
-        // 'Datatables' => [
-        //     'active' => true,
-        //     'files' => [
-        //         [
-        //             'type' => 'js',
-        //             'asset' => true,
-        //             'location' => '//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js',
-        //         ],
-        //         [
-        //             'type' => 'js',
-        //             'asset' => true,
-        //             'location' => '//cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js',
-        //         ],
-        //         [
-        //             'type' => 'css',
-        //             'asset' => true,
-        //             'location' => '//cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css',
-        //         ],
-        //     ],
-        // ],
         'Datatables' => [
             'active' => true,
             'files' => [
                 [
                     'type' => 'js',
                     'asset' => true,
-                    'location' => '//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js',
+                    // 'location' => 'vendor/datatables/js/jquery.dataTables.min.js',
+                    'location' => 'https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js',
                 ],
                 [
                     'type' => 'js',
                     'asset' => true,
-                    'location' => '//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js',
-                ],
-                [
-                    'type' => 'js',
-                    'asset' => true,
-                    'location' => '//cdn.datatables.net/v/bs4-4.6.0/jszip-2.5.0/dt-1.11.2/af-2.3.7/b-2.0.0/b-colvis-2.0.0/b-html5-2.0.0/b-print-2.0.0/cr-1.5.4/date-1.1.1/fc-3.3.3/fh-3.1.9/kt-2.6.4/r-2.2.9/rg-1.1.3/rr-1.2.8/sc-2.0.5/sb-1.2.1/sp-1.4.0/sl-1.3.3/datatables.min.js',
+                    'location' => 'vendor/datatables/js/dataTables.bootstrap4.min.js',
                 ],
                 [
                     'type' => 'css',
                     'asset' => true,
-                    'location' => '//cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.11.2/b-2.0.0/b-colvis-2.0.0/b-html5-2.0.0/b-print-2.0.0/date-1.1.1/r-2.2.9/sp-1.4.0/datatables.min.css',
+                    'location' => 'vendor/datatables/css/dataTables.bootstrap4.min.css',
                 ],
             ],
         ],
 
-
-        // <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
-        // <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-        // <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.11.2/b-2.0.0/b-colvis-2.0.0/b-html5-2.0.0/b-print-2.0.0/date-1.1.1/r-2.2.9/sp-1.4.0/datatables.min.js"></script>
-
+        'DatatablesPlugins' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/buttons/js/dataTables.buttons.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/buttons/js/buttons.bootstrap4.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/buttons/js/buttons.html5.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/buttons/js/buttons.print.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/jszip/jszip.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/pdfmake/pdfmake.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/pdfmake/vfs_fonts.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/buttons/css/buttons.bootstrap4.min.css',
+                ],
+            ],
+        ],
 
         'Select2' => [
             'active' => true,

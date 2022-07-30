@@ -29,6 +29,7 @@
                                 <th>No.</th>
                                 <th>Kampus</th>
                                 <th>Nama</th>
+                                <th>Jenkel</th>
                                 <th>Alamat</th>
                                 <th>Telepon</th>
                                 <th>Wali</th>
@@ -41,12 +42,13 @@
                                 <td>{{$key+1}}</td>
                                 <td>{{$data->kampus}}</td>
                                 <td>{{$data->nama}}</td>
+                                <td>{{$data->jenkel}}</td>
                                 <td>{{$data->alamat}}</td>
                                 <td>{{ convertNumber($data->no_telp) }}</td>
                                 <td>{{$data->nama_ortu}}</td>
                                 <td>{{$data->jenjang}} {{$data->kelas}}</td>
                                 <td>
-                                    <a class="badge bg-info border-0" href="/datasantri/{{ $data->id }}/edit">
+                                    <a class="badge bg-info border-0" href="/datasantri/{{ $data->id }}">
                                         Detail
                                     </a>
                                     <a class="badge bg-warning border-0" href="/datasantri/{{ $data->id }}/edit">
