@@ -29,3 +29,28 @@ function convertNumber($number)
         return $hp;
     }
 }
+
+
+function dataPerizinan($status)
+{
+    switch ($status) {
+        case 0:
+            return 'Semua Kampus';
+            break;
+        case 1:
+            return 'Kampus 1';
+            break;
+        case 2:
+            return 'Kampus 2';
+            break;
+        case 3:
+            return 'Kampus 3';
+            break;
+        case 4:
+            return 'Kampus 4';
+            break;
+        default:
+            return 'Semua Kampus as';
+            break;
+    }
+}

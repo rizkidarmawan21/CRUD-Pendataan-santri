@@ -17,4 +17,9 @@ class DataSantri extends Model
     {
         return $this->hasOne(DetailSantri::class, 'id_santri', 'id');
     }
+
+    public function perizinan()
+    {
+        return $this->hasMany(Perizinan::class, 'id_santri', 'id');
+    }
 }

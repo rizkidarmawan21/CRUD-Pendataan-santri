@@ -7,6 +7,7 @@ use App\Http\Controllers\GedungController;
 use App\Http\Controllers\DataSantriController;
 use App\Http\Controllers\DetailSantriController;
 use App\Http\Controllers\KamarController;
+use App\Http\Controllers\PerizinanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,7 +33,7 @@ Route::get('/home', function () {
 })->name('home')->middleware('auth');
 
 Route::resource('users', UserController::class)
-    ->middleware('auth');
+    ->middleware(['auth', 'administrator']);
 
 Route::get('/exportexcel', [DataSantriController::class, 'exportexcel'])->name('exportexcel');
 Route::get('/import', function () {
@@ -55,5 +56,12 @@ Route::put('kamar/santri/{detailsantri}/update', [DetailSantriController::class,
 Route::get('kamar/santri', [KamarController::class, 'kamarSantri'])->middleware('auth')->name('kamar.santri');
 
 Route::resource('kamar', KamarController::class)->middleware('auth');
+Route::resource('perizinan', PerizinanController::class)->middleware('auth');
+
+
+// Error handling page
+Route::get('error/403', function () {
+    return view('error.403');
+})->name('error-403');
 
 Auth::routes();

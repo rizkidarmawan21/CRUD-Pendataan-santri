@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
+
 return [
 
     /*
@@ -331,7 +333,12 @@ return [
         [
             'text' => 'Kamar Santri',
             'url'     => '/kamar/santri',
-            'icon'  => 'fa fa-bed',
+            'icon'  => 'fa fa-fw fa-bed',
+        ],
+        [
+            'text' => 'Perizinan',
+            'url'     => 'perizinan',
+            'icon'  => 'fa fa-fw fa-address-book',
         ],
         [
             'text'    => 'Data Master',
@@ -350,6 +357,7 @@ return [
                     'text' => 'Setting User',
                     'url'  => '/users',
                 ]
+                
 
             ],
         ],
