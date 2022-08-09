@@ -19,6 +19,6 @@ class Administrator
         if (auth()->user()->is_admin != 0) {
             return redirect()->route('error-403');
         }
-        //return $next($request);
+        return $next($request);
     }
 }

@@ -13,7 +13,7 @@ class PerizinanRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,10 @@ class PerizinanRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'id_santri' => 'required',
+            'nama_perizinan' => 'required',
+            'keterangan' => 'required',
+            'tanggal_kembali' => 'required',
         ];
     }
 }
