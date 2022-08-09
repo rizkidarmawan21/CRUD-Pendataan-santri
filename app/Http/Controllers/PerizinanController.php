@@ -78,7 +78,13 @@ class PerizinanController extends Controller
      */
     public function show(Perizinan $perizinan)
     {
-        return "Detail Perizinan";
+        $query = Perizinan::with('santri.detail.kamar.gedung');
+        $data = $query->where('id', $perizinan->id)->first();
+        return view('perizinan.detail',[
+            'perizinan' => $data,
+            'historyIzin' => $query->where('id_santri', $data->santri->id)->get(),
+            'masterSantri' => DetailSantri::with('santri')->get()
+        ]);
     }
 
     /**
@@ -101,7 +107,7 @@ class PerizinanController extends Controller
      */
     public function update(Request $request, Perizinan $perizinan)
     {
-        //
+        echo 'update izin' ;
     }
 
     /**
