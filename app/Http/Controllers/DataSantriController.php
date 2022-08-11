@@ -182,9 +182,6 @@ class DataSantriController extends Controller
 
     public function download()
     {
-        Log::info("Download template excel", [
-            "username" => Auth::user()->name
-        ]);
         return Storage::disk('local')->download('public/download/template_datasantri.xlsx');
     }
 }
