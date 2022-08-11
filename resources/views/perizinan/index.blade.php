@@ -5,6 +5,13 @@
 <h1 class="m-0 text-dark">
     Perizinan Santri
     {{ dataPerizinan(Auth::user()->is_admin) }}
+    @if(isset($_GET['filter']) && $_GET['filter'] == 'not-verify')
+    <small style="font-size: 13px" class=" badge badge-pill badge-info">Not Verify</small>
+    @elseif(isset($_GET['filter']) && $_GET['filter'] == 'verify')
+    <small style="font-size: 13px" class=" badge badge-pill badge-info">Masa Izin</small>
+    @elseif(isset($_GET['filter']) && $_GET['filter'] == 'back')
+    <small style="font-size: 13px" class=" badge badge-pill badge-info">Sudah Kembali</small>
+    @endif
 </h1>
 @stop
 
@@ -27,11 +34,13 @@
                         class="mb-2 btn btn-sm btn-primary">Tambah
                         Perizinan
                         Santri</button>
-                    <a href="" class="btn btn-sm mb-2 btn-secondary">All</a>
-                    <a href="" class="btn btn-warning btn-sm mb-2">
+                    <a href="{{ route('perizinan.index')}}" class="btn btn-sm mb-2 btn-info">All</a>
+                    <a href="{{ route('perizinan.index',['filter' => 'not-verify']) }}"
+                        class="btn btn-sm mb-2 btn-danger">Not Verify</a>
+                    <a href="{{ route('perizinan.index',['filter' => 'verify']) }}" class="btn btn-warning btn-sm mb-2">
                         Masa Izin
                     </a>
-                    <a href="" class="btn btn-success btn-sm mb-2">
+                    <a href="{{ route('perizinan.index',['filter' => 'back']) }}" class="btn btn-success btn-sm mb-2">
                         Sudah Kembali
                     </a>
                 </div>
@@ -93,21 +102,25 @@
                                     @if($item->status == 0)
                                     @if(Auth::user()->is_admin == 1 || Auth::user()->is_admin == 0)
 
-                                    <form method="POST" action="">
+                                    <form method="POST" action="{{ route('perizinan.verify',$item->id) }}">
                                         @csrf
                                         <button type="submit" class="badge badge-pill badge-warning border-0">
                                             Verify
                                         </button>
                                     </form>
                                     @endif
-                                    <a href="" target="blank" class="badge badge-pill badge-success">
+                                    <a target="blank" href="{{ route('perizinan.surekom',$item->id) }}" target="blank"
+                                        class="badge badge-pill badge-success">
                                         Surat Pengantar
                                     </a>
                                     @elseif($item->status == 1)
-                                    <a href="" target="blank" class="badge badge-pill badge-warning">
+                                    @if(Auth::user()->is_admin == 1 || Auth::user()->is_admin == 0)
+                                    <a target="blank" href="{{ route('perizinan.suizin',$item->id) }}" target="blank"
+                                        class="badge badge-pill badge-warning">
                                         Surat Izin
                                     </a>
-                                    <form action="" method="post">
+                                    @endif
+                                    <form action="{{ route('perizinan.back',$item->id) }}" method="post">
                                         @csrf
                                         <button class="badge badge-success badge-pill border-0">
                                             Kembali
@@ -165,7 +178,8 @@
                                     style="width: 100%;" name="id_santri" required>
                                     <option value="" selected disabled>Pilih santri</option>
                                     @foreach($masterSantri as $mSantri)
-                                    <option value="{{ $mSantri->santri->id }}">{{ $mSantri->santri->nama }} - {{
+                                    <option value="{{ $mSantri->santri->id }}">{{ $mSantri->santri->kampus }} - {{
+                                        $mSantri->santri->nama }} - {{
                                         $mSantri->santri->jenjang }} {{
                                         $mSantri->santri->kelas }}</option>
                                     @endforeach

@@ -204,7 +204,7 @@
                                     style="width: 100%;" name="id_santri[]">
 
                                     @foreach($masterSantri as $mSantri)
-                                    <option value="{{ $mSantri->id }}">{{ $mSantri->nama }} - {{ $mSantri->jenjang }} {{
+                                    <option value="{{ $mSantri->id }}">{{ $mSantri->kampus }} - {{ $mSantri->nama }} - {{ $mSantri->jenjang }} {{
                                         $mSantri->kelas }}</option>
                                     @endforeach
                                 </select>

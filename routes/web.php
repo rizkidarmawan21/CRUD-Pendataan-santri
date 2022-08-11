@@ -56,6 +56,11 @@ Route::put('kamar/santri/{detailsantri}/update', [DetailSantriController::class,
 Route::get('kamar/santri', [KamarController::class, 'kamarSantri'])->middleware('auth')->name('kamar.santri');
 
 Route::resource('kamar', KamarController::class)->middleware('auth');
+
+Route::post('perizinan/{perizinan}/verify', [PerizinanController::class, 'verify'])->middleware(['auth', 'administrator'])->name('perizinan.verify');
+Route::post('perizinan/{perizinan}/back', [PerizinanController::class, 'back'])->middleware('auth')->name('perizinan.back');
+Route::get('perizinan/{id}/surekom', [PerizinanController::class, 'suratPengantar'])->middleware('auth')->name('perizinan.surekom');
+Route::get('perizinan/{id}/suizin', [PerizinanController::class, 'suratIzin'])->middleware(['auth','administrator'])->name('perizinan.suizin');
 Route::resource('perizinan', PerizinanController::class)->middleware('auth');
 
 
