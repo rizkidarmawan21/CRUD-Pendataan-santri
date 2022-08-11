@@ -37,9 +37,10 @@ class PerizinanController extends Controller
                 $masterSantri = DetailSantri::with('santri')->get();
                 break;
             case 1:
-                $perizinan = $Query->whereHas('santri', function ($query) {
-                    $query->where('kampus', 'Kampus 1');
-                })->get();
+                // $perizinan = $Query->whereHas('santri', function ($query) {
+                //     $query->where('kampus', 'Kampus 1');
+                // })->get();
+                 $perizinan = $Query->get();
                 $masterSantri = DetailSantri::with('santri')->whereHas('santri', function ($query) {
                     $query->where('kampus', 'Kampus 1');
                 })->get();
