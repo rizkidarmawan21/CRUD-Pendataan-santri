@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\Http\Middleware\Administrator;
+use App\Http\Middleware\AdminPerizinan;
 use App\Http\Middleware\Kampus1;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -66,6 +67,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'administrator' => Administrator::class,
-        'kampus-1' =>Kampus1::class
+        'kampus-1' =>Kampus1::class,
+        'adminPerizinan' => AdminPerizinan::class
     ];
 }
