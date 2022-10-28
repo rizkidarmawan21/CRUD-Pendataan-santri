@@ -160,9 +160,13 @@ CREATE TABLE `users` (
 --
 -- Dumping data for table `users`
 --
-
-INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Rizki Darmawan', 'rizkidarmawan.0402102@gmail.com', NULL, '$2y$10$cxAA7kcArfLiZp4lwjunreEVQAc1AJ5kG6LS8IpJylQ.d9Fl7UNWu', NULL, '2021-09-23 21:37:08', '2021-09-23 21:37:08');
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `is_admin`) VALUES
+(1, 'Admin Kampus 2', 'kampusdua@gmail.com', NULL, '$2y$10$Pw0D9lBRcUbx6KHA23pG2OX3rwCxQUv9LCdYXZEd9qy5U.VNsjQ2y', NULL, '2022-07-31 06:40:36', '2022-10-28 03:08:01', 2),
+(2, 'Rizki Darms', 'admin@gmail.com', NULL, '$2y$10$IYw56EaG4hFOb8e6dUC0ie3ifLkqHd3oUwM874ZfPKj/tKWN3QpY6', NULL, '2022-08-05 21:23:10', '2022-08-05 21:23:10', 0),
+(3, 'Admin Kampus 1', 'kampussatu@gmail.com', NULL, '$2y$10$9Xw4IXWApeMF0KOw2YlQKe0MVqASgvM9fh7.ZsUtuvB2RHhChBaPS', NULL, '2022-08-10 05:28:08', '2022-10-28 03:08:21', 1),
+(4, 'Kang Syakur', 'syakur@gmail.com', NULL, '$2y$10$.0NpWrqNPuPTHdb74PIm2.lDneAjh0vB7/BTfzoyqpc9S2sjrslby', NULL, '2022-08-10 05:29:36', '2022-10-28 03:08:34', 0),
+(5, 'Admin Kampus 3', 'kampustiga@gmail.com', NULL, '$2y$10$lm7NSevPVTuhItHMHprpYeNEEKVcTPpjWY1xj3sx.Uk.9cCl5EHWq', NULL, '2022-08-10 05:30:35', '2022-10-28 03:12:32', 3),
+(6, 'Admin Kampus 4', 'kampusempat@gmail.com', NULL, '$2y$10$Q2qHnfUCDUv2W70JPFz5Z.5N43reScgV.MHzew9PyxxmQbeQsXdTO', NULL, '2022-08-10 05:31:10', '2022-10-28 03:08:53', 4);
 
 --
 -- Indexes for dumped tables

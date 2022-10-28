@@ -2,7 +2,19 @@
 
 @section('title', 'Data Santri')
 @section('content_header')
-<h1 class="m-0 text-dark">Data Santri</h1>
+<h1 class="m-0 text-dark">
+    @if(Auth::user()->is_admin == 0)
+    Semua Data Santri
+    @elseif(Auth::user()->is_admin == 1)
+    Data Santri Kampus 1
+    @elseif(Auth::user()->is_admin == 2)
+    Data Santri Kampus 2
+    @elseif(Auth::user()->is_admin == 3)
+    Data Santri Kampus 3
+    @elseif(Auth::user()->is_admin == 4)
+    Data Santri Kampus 4
+    @endif
+</h1>
 @stop
 
 @section('content')

@@ -40,29 +40,50 @@ class KamarController extends Controller
         $gedung = $request->input('gedung');
         $kamar = $request->input('kamar');
 
-        if ($kampus) {
-            $dataGedungBasedOnKampus = Gedung::with(['kamar'])->where('kampus', $kampus)->get();
+        if (Auth::user()->is_admin == 0) {
+            if ($kampus) {
+                $dataGedungBasedOnKampus = Gedung::with(['kamar'])->where('kampus', $kampus)->get();
+            } else {
+                $dataGedungBasedOnKampus = Gedung::with(['kamar'])->orderBy('kampus')->get();
+            }
 
-        } else {
-            $dataGedungBasedOnKampus = Gedung::with(['kamar'])->orderBy('kampus')->get();
-        }
 
+            $dataSantri = DetailSantri::with(['santri', 'kamar.gedung']);
+            if ($gedung && $kamar) {
+                $getGedung = Gedung::where('gedung', $gedung)->firstOrFail();
+                $getKamar = Kamar::where(['id_gedung' => $getGedung->id, 'kamar' => $kamar])->firstOrFail();
+                $dataSantri = $dataSantri->where('id_kamar', $getKamar->id);
+            }
 
-        $dataSantri = DetailSantri::with(['santri', 'kamar.gedung']);
-        if ($gedung && $kamar) {
-            $getGedung = Gedung::where('gedung', $gedung)->firstOrFail();
-            $getKamar = Kamar::where(['id_gedung'=>$getGedung->id,'kamar'=> $kamar])->firstOrFail();
-            $dataSantri = $dataSantri->where('id_kamar',$getKamar->id);
-        }
+            if ($kampus) {
+                // data santri by kampus
+                $dataSantri = $dataSantri->whereHas('kamar.gedung', function ($query) use ($kampus) {
+                    $query->where('kampus', '=', $kampus);
+                });
+            }
+        } elseif (Auth::user()->is_admin == 1) {
+            $dataGedungBasedOnKampus = Gedung::with(['kamar'])->where('kampus', 'Kampus 1')->get();
 
-        if($kampus) {
-            // data santri by kampus
-            $dataSantri = $dataSantri->whereHas('kamar.gedung', function ($query) use ($kampus) {
-                $query->where('kampus','=', $kampus);
+            $dataSantri = DetailSantri::with(['santri', 'kamar.gedung'])->whereHas('kamar.gedung', function ($query) use ($kampus) {
+                $query->where('kampus', '=', 'Kampus 1');
             });
-        }
+            if ($gedung && $kamar) {
+                $getGedung = Gedung::where('gedung', $gedung)->firstOrFail();
+                $getKamar = Kamar::where(['id_gedung' => $getGedung->id, 'kamar' => $kamar])->firstOrFail();
+                $dataSantri = $dataSantri->where('id_kamar', $getKamar->id);
+            }
+        } elseif (Auth::user()->is_admin == 2) {
+            $dataGedungBasedOnKampus = Gedung::with(['kamar'])->where('kampus', 'Kampus 2')->get();
 
-        // dd(Kamar::with('gedung')->get());
+            $dataSantri = DetailSantri::with(['santri', 'kamar.gedung'])->whereHas('kamar.gedung', function ($query) use ($kampus) {
+                $query->where('kampus', '=', 'Kampus 2');
+            });
+            if ($gedung && $kamar) {
+                $getGedung = Gedung::where('gedung', $gedung)->firstOrFail();
+                $getKamar = Kamar::where(['id_gedung' => $getGedung->id, 'kamar' => $kamar])->firstOrFail();
+                $dataSantri = $dataSantri->where('id_kamar', $getKamar->id);
+            }
+        }
 
         return view('kamar.santri', [
             'kampus' => $kampus,
@@ -97,7 +118,7 @@ class KamarController extends Controller
             'id_gedung' => 'required',
             'kamar'     => 'required|integer'
         ]);
-        
+
         $data = Kamar::create($data);
         Log::info("Create data kamar", [
             "username" => Auth::user()->name,

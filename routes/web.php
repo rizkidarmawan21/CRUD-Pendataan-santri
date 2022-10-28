@@ -32,21 +32,26 @@ Route::get('/home', function () {
     return view('home');
 })->name('home')->middleware('auth');
 
-Route::resource('users', UserController::class)
-    ->middleware(['auth', 'administrator']);
+Route::middleware(['administrator'])->group(function () {
+    Route::resource('users', UserController::class)
+        ->middleware(['auth', 'administrator']);
+
+    Route::resource('gedung', GedungController::class)
+        ->middleware('auth');
+});
 
 Route::get('/exportexcel', [DataSantriController::class, 'exportexcel'])->name('exportexcel');
 Route::get('/import', function () {
     return view('data.import');
 });
 
+
 Route::post('import', [DataSantriController::class, 'import'])->name('import');
 Route::get('download', [DataSantriController::class, 'download'])->name('download');
 Route::resource('datasantri', DataSantriController::class)
     ->middleware('auth');
 
-Route::resource('gedung', GedungController::class)
-    ->middleware('auth');
+
 
 Route::post('detail-santri', [DetailSantriController::class, 'store'])->middleware('auth')->name('detail.santri');
 Route::post('detail-santri/{id}', [DetailSantriController::class, 'destroy'])->middleware('auth')->name('detail.santri.delete');
@@ -54,8 +59,7 @@ Route::post('detail-santri/{id}', [DetailSantriController::class, 'destroy'])->m
 Route::get('kamar/santri/{detailsantri}/edit', [DetailSantriController::class, 'edit'])->middleware('auth')->name('detail.santri.edit');
 Route::put('kamar/santri/{detailsantri}/update', [DetailSantriController::class, 'update'])->middleware('auth')->name('detail.santri.update');
 Route::get('kamar/santri', [KamarController::class, 'kamarSantri'])->middleware('auth')->name('kamar.santri');
-
-Route::resource('kamar', KamarController::class)->middleware('auth');
+Route::resource('kamar', KamarController::class)->middleware(['auth','administrator']);
 
 Route::post('perizinan/{perizinan}/verify', [PerizinanController::class, 'verify'])->middleware(['auth', 'adminPerizinan'])->name('perizinan.verify');
 Route::post('perizinan/{perizinan}/back', [PerizinanController::class, 'back'])->middleware('auth')->name('perizinan.back');

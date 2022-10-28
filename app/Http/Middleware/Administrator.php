@@ -16,7 +16,7 @@ class Administrator
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->user()->is_admin != 0) {
+        if (!auth()->check() || auth()->user()->is_admin != 0) {
             return redirect()->route('error-403');
         }
         return $next($request);

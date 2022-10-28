@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Exports\DataSantriExport;
 use App\Imports\DataSantriImport;
 use App\Models\DetailSantri;
+use App\Models\Perizinan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
@@ -25,7 +26,21 @@ class DataSantriController extends Controller
         Log::info("call function index datasantri", [
             "username" => Auth::user()->name
         ]);
-        $data_santris = DataSantri::all();
+
+        if (Auth::user()->is_admin == 0) {
+            $data_santris = DataSantri::all();
+        } elseif (Auth::user()->is_admin == 1) {
+            $data_santris = DataSantri::where('kampus', 'Kampus 1')->get();
+        } elseif (Auth::user()->is_admin == 2) {
+            $data_santris = DataSantri::where('kampus', 'Kampus 2')->get();
+        } elseif (Auth::user()->is_admin == 3) {
+            $data_santris = DataSantri::where('kampus', 'Kampus 3')->get();
+        } elseif (Auth::user()->is_admin == 4) {
+            $data_santris = DataSantri::where('kampus', 'Kampus 4')->get();
+        } else {
+            $data_santris = DataSantri::all();
+        }
+
         return view('data.index', [
             'data_santris' => $data_santris
         ]);
@@ -153,6 +168,9 @@ class DataSantriController extends Controller
     {
 
         DetailSantri::where('id_santri', $datasantri->id)->delete();
+
+        Perizinan::where('id_santri',$datasantri->id)->delete();
+
         $datasantri->delete();
         Log::info("Delete data santri", [
             "username" => Auth::user()->name,
@@ -167,7 +185,21 @@ class DataSantriController extends Controller
         Log::info("Export data santri", [
             "username" => Auth::user()->name
         ]);
-        return Excel::download(new DataSantriExport, 'datasantri.xlsx');
+
+        if (Auth::user()->is_admin == 0) {
+            $filename = 'datasantri-all.xlsx';
+        } elseif (Auth::user()->is_admin == 1) {
+            $filename = 'datasantri-kampus-1.xlsx';
+        } elseif (Auth::user()->is_admin == 2) {
+            $filename = 'datasantri-kampus-2.xlsx';
+        } elseif (Auth::user()->is_admin == 3) {
+            $filename = 'datasantri-kampus-3.xlsx';
+        } elseif (Auth::user()->is_admin == 4) {
+            $filename = 'datasantri-kampus-4.xlsx';
+        } else {
+        }
+
+        return Excel::download(new DataSantriExport, $filename);
     }
 
     public function import(Request $request)

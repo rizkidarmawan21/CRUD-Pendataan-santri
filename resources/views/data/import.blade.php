@@ -41,6 +41,8 @@
                 <ol type="number">
                   <li>Download Template Excel <a href="/download">disini</a> </li>
                   <li>Input data pada kolom yang sudah disediakan</li>
+                  <li>Jenis Kelamin diisi : SANTRIWAN atau SANTRIWATI</li>
+                  <li>Penulisan field kampus : Kampus 1, Kampus 2, Kampus 3, Kampus 4 . Perhatikan besar kecil huruf!</li>
                   <li>Setelah berhasil import data,hapus data judul yang ikut masuk kedalam aplikasi <a target="blank"
                       href="/video-import.mp4">Lihat contoh</a></li>
                 </ol>
