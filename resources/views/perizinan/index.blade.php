@@ -191,7 +191,7 @@
                                     <select name="nama_perizinan" id="nama_perizinan" class="form-control" required>
                                         <option value="" disabled selected>Pilih perizinan</option>
                                         <option value="IZIN PULANG">IZIN PULANG</option>
-                                        <option value="IZIN KELUAR" disabled>IZIN KELUAR (Maintanence)</option>
+                                        <option value="IZIN KELUAR" disabled>IZIN KELUAR (Maintenance)</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
