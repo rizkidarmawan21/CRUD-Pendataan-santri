@@ -27,6 +27,7 @@ class DataSantriController extends Controller
             "username" => Auth::user()->name
         ]);
 
+        // validasi data santri berdasarkan role akun yang login
         if (Auth::user()->is_admin == 0) {
             $data_santris = DataSantri::all();
         } elseif (Auth::user()->is_admin == 1) {
@@ -169,7 +170,7 @@ class DataSantriController extends Controller
 
         DetailSantri::where('id_santri', $datasantri->id)->delete();
 
-        Perizinan::where('id_santri',$datasantri->id)->delete();
+        Perizinan::where('id_santri', $datasantri->id)->delete();
 
         $datasantri->delete();
         Log::info("Delete data santri", [

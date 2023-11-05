@@ -18,8 +18,8 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
         // \App\Models\DataSantri::factory(20)->create();
         User::create([
-            'name' => 'Rizki Darmawan',
-            'email' => 'rizkidarmawan.0402102@gmail.com',
+            'name' => 'Admin',
+            'email' => 'admin@gmail.com',
             'password' => bcrypt('12345678')
         ]);
 
