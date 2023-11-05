@@ -37,7 +37,8 @@
                         <a href="{{ route('perizinan.index') }}" class="btn btn-sm mb-2 btn-info">All</a>
                         <a href="{{ route('perizinan.index', ['filter' => 'not-verify']) }}"
                             class="btn btn-sm mb-2 btn-danger">Not Verify</a>
-                        <a href="{{ route('perizinan.index', ['filter' => 'verify']) }}" class="btn btn-warning btn-sm mb-2">
+                        <a href="{{ route('perizinan.index', ['filter' => 'verify']) }}"
+                            class="btn btn-warning btn-sm mb-2">
                             Masa Izin
                         </a>
                         <a href="{{ route('perizinan.index', ['filter' => 'back']) }}" class="btn btn-success btn-sm mb-2">
@@ -154,7 +155,7 @@
         <div class="float-right d-none d-sm-block">
             <b>Version</b> 1.0.1
         </div>
-        <strong>Application Created with ❤️ By <a target="blank" href="http://rizkidarmawan21.github.io">Darms</a>.</strong>
+        <strong>Application Created with ❤️ By <a target="blank" href="">Darms</a>.</strong>
     </footer>
 
     {{-- {{ dd($masterSantri) }} --}}

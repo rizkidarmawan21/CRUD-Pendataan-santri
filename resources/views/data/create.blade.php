@@ -174,7 +174,6 @@
         <div class="float-right d-none d-sm-block">
             <b>Version</b> 1.0.1
         </div>
-        <strong>Application Created with ❤️ By <a target="blank"
-                href="http://rizkidarmawan21.github.io">Darms</a>.</strong>
+        <strong>Application Created with ❤️ By <a target="blank" href="">Darms</a>.</strong>
     </footer>
 @stop

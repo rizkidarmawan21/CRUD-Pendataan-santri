@@ -51,12 +51,14 @@
 
 <body class="body">
     <div class="header">
-        <img src="{{asset('assets/izinReg.jpg')}}" alt="">
+        {{-- Kop surat pesantren --}}
+        <img src="https://user-images.githubusercontent.com/80609220/280525127-936210f1-f163-4670-974b-6728a58a6cef.png" alt="">
+        <br>
     </div>
     <section class="container">
         <div class="body">
             <header>
-                <img src="{{asset('assets/logo ponpes.png')}}" alt="">
+                <img src="https://www.logoku.com/image/c/data/items/1695353615_logokucom_letter-a-book-and-mosque-logo.jpg" alt="">
                 <span>SURAT PENGANTAR</span>
             </header>
             <div class="main">

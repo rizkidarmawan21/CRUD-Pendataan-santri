@@ -48,7 +48,8 @@ return [
     */
 
     'logo' => '<b>Pendataan</b>Santri',
-    'logo_img' => 'vendor/adminlte/dist/img/logo ponpes.png',
+    // 'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+    'logo_img' => 'https://user-images.githubusercontent.com/80609220/280525516-8b705c11-9b5b-4394-a251-44edf6086414.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',

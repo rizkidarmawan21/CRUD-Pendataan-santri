@@ -59,13 +59,13 @@
 
 <body class="body">
     <div class="header">
-        {{-- <img class="kop" src="{{asset('assets/izinReg.jpg')}}" alt=""> --}}
+        <img class="kop" src="https://user-images.githubusercontent.com/80609220/280525127-936210f1-f163-4670-974b-6728a58a6cef.png" alt="">
     </div>
     <section class="container">
         <div class="body">
             <header>
-                <img src="{{asset('assets/back.jpg')}}" alt="">
-                {{-- <span>SURAT IZIN</span> --}}
+                {{-- <img src="https://user-images.githubusercontent.com/80609220/280525127-936210f1-f163-4670-974b-6728a58a6cef.png" alt=""> --}}
+                <span>SURAT IZIN</span>
             </header>
             <div class="main">
                 <table class="table">
