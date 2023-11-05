@@ -14,6 +14,6 @@ class DataSantriSeeder extends Seeder
      */
     public function run()
     {
-        // DataSantri::factory(10)->create();
+        DataSantri::factory(15)->create();
     }
 }

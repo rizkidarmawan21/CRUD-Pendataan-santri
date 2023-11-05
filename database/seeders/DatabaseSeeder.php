@@ -15,35 +15,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
-        // \App\Models\DataSantri::factory(20)->create();
-        User::create([
-            'name' => 'Admin',
-            'email' => 'admin@gmail.com',
-            'password' => bcrypt('12345678')
-        ]);
 
-        // DataSantri::create([
-        //     'nama' => 'Fulan',
-        //     'alamat' => 'Semarang',
-        //     'no_telp' => '082137135727',
-        //     'nama_ortu' => 'Bpk Fulan',
-        //     'kampus' => 'Kampus 1',
-        //     'gedung' => 'Umar',
-        //     'kamar' => '101',
-        //     'jenjang' => 'SMP',
-        //     'kelas' => '7'
-        // ]);
-        // DataSantri::create([
-        //     'nama' => 'Fulan2',
-        //     'alamat' => 'Semarang2',
-        //     'no_telp' => '082137135727',
-        //     'nama_ortu' => 'Bpk Fulan2',
-        //     'kampus' => 'Kampus 2',
-        //     'gedung' => 'Umar',
-        //     'kamar' => '101',
-        //     'jenjang' => 'SMP',
-        //     'kelas' => '7'
-        // ]);
+        $this->call([
+            UserSeeder::class,
+            DataSantriSeeder::class,
+            GedungSeeder::class,
+            KamarSeeder::class,
+        ]);
     }
 }
